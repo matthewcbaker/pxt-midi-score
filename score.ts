@@ -1,4 +1,9 @@
 
+enum NoteName {
+    C1,
+    D1
+}
+
 /**
  * Musical Score
  */
@@ -9,8 +14,8 @@ namespace score {
 
     }
 
-    //% block="note name $name"
-    export function noteName(name: string): number {
+    //% block="$name"
+    export function note(name: NoteName): number {
         return 60
     }
 }

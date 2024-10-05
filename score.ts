@@ -1,7 +1,60 @@
 
 enum NoteName {
-    C1,
-    D1
+    C,
+    //% block="C#"
+    Cs,
+    D,
+    E,
+    F,
+    G,
+    A,
+    B
+}
+
+enum NoteOctave {
+    //% block="-1"
+    Om1,
+    //% block="0"
+    O0,
+    //% block="1"
+    O1,
+    //% block="2"
+    O2,
+    //% block="3"
+    O3,
+    //% block="4"
+    O4,
+    //% block="5"
+    O5,
+    //% block="6"
+    O6,
+    //% block="7"
+    O7,
+    //% block="8"
+    O8,
+    //% block="9"
+    O9
+}
+
+enum NoteNameOctave {
+    C4,
+    //% block="C#4"
+    Cs4,
+    D4,
+    E4,
+    F4,
+    G4,
+    A4,
+    B4,
+    C5,
+    //% block="C#5"
+    Cs5,
+    D5,
+    E5,
+    F5,
+    G5,
+    A5,
+    B5
 }
 
 /**
@@ -14,8 +67,20 @@ namespace score {
 
     }
 
-    //% block="$name"
-    export function note(name: NoteName): number {
+    //% block="name $name"
+    export function note(name: NoteNameOctave): number {
+        return 60
+    }
+
+    //% block="name2 $name $octave"
+    //% octave.min=-1 octave.max=9 octave.defl=4
+    export function note2(name: NoteName, octave: number): number {
+        return 60
+    }
+
+    //% block="name3 $name $octave"
+    //% octave.defl=O4
+    export function note3(name: NoteName, octave: NoteOctave): number {
         return 60
     }
 }

@@ -96,7 +96,7 @@ namespace score {
         return 60
     }
 
-    //% block
+    //% block="$controller notes $notes duration $duration=device_beat"
     export function playNotes(controller: midi.MidiController, notes: number[], duration: number) {
         if (duration > 0) {
             for (let note of notes) {

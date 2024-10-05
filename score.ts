@@ -1,4 +1,13 @@
 
+enum Location {
+    USB,
+    //% block="Text over USB"
+    USB_TEXT,
+    P0,
+    P1,
+    P2
+}
+
 enum NoteName {
     C,
     //% block="C#"
@@ -37,16 +46,17 @@ enum NoteOctave {
 }
 
 enum NoteNameOctave {
-    C4,
+    A3 = 57,
+    C4 = 60,
     //% block="C#4"
     Cs4,
     D4,
     E4,
     F4,
     G4,
-    A4,
+    A4 = 69,
     B4,
-    C5,
+    C5 = 72,
     //% block="C#5"
     Cs5,
     D5,
@@ -62,6 +72,24 @@ enum NoteNameOctave {
  */
 //% weight=84 icon="\uf039" color="#5ea9dd"
 namespace score {
+    //% block="score send midi to $location"
+    export function use(location: Location) {
+        if (location == Location.USB_TEXT) {
+            midi.useSerial()
+            return
+        } else if (location == Location.USB) {
+            midi.useRawSerial()
+            return
+        }
+        let pin = SerialPin.P0
+        if (location == Location.P1)
+            pin = SerialPin.P1
+        else if (location == Location.P2)
+            pin = SerialPin.P2
+        serial.redirect(pin, pin, BaudRate.BaudRate31250)
+        midi.useRawSerial()
+    }
+
     //% block="score key"
     export function setKey() {
 
@@ -81,7 +109,7 @@ namespace score {
 
     //% block="name $name"
     export function note(name: NoteNameOctave): number {
-        return 60
+        return name
     }
 
     //% block="name2 $name $octave"

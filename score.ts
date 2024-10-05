@@ -67,6 +67,18 @@ namespace score {
 
     }
 
+    function convertNoteToKey(note: number): number {
+        return note
+    }
+
+    function convertNotesToKey(notes: number[]): number[] {
+        let ret: number[] = []
+        for (let note of notes) {
+            ret.push(convertNoteToKey(note))
+        }
+        return ret
+    }
+
     //% block="name $name"
     export function note(name: NoteNameOctave): number {
         return 60
@@ -82,5 +94,19 @@ namespace score {
     //% octave.defl=O4
     export function note3(name: NoteName, octave: NoteOctave): number {
         return 60
+    }
+
+    //% block
+    export function playNotes(controller: midi.MidiController, notes: number[], duration: number) {
+        if (duration > 0) {
+            for (let note of notes) {
+                controller.noteOn(note)
+            }
+            basic.pause(duration);
+        }
+        for (let note of notes) {
+            controller.noteOff(note);
+        }
+        basic.pause(6);
     }
 }

@@ -96,7 +96,13 @@ namespace score {
     }
 
     function convertNoteToKey(note: number): number {
-        return note
+        if (note == 24 || note == 36 || note == 48 || note == 60 || note == 72) {
+            return note + 1
+        } else if (note == 29 || note == 41 || note == 53 || note == 65 || note == 77) {
+            return note + 1
+        } else {
+            return note
+        }
     }
 
     function convertNotesToKey(notes: number[]): number[] {
@@ -109,7 +115,7 @@ namespace score {
 
     //% block="name $name"
     export function note(name: NoteNameOctave): number {
-        return name
+        return convertNoteToKey(name)
     }
 
     //% block="name2 $name $octave"

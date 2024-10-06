@@ -69,6 +69,13 @@ enum NoteNameOctave {
     B5
 }
 
+enum Foreground {
+    //% block="Foreground"
+    Y,
+    //% block="Background"
+    N
+}
+
 /**
  * Musical Score
  */
@@ -132,8 +139,7 @@ namespace score {
         return 60
     }
 
-    //% block="$controller notes $notes duration $duration=device_beat"
-    export function playNotes(controller: midi.MidiController, notes: number[], duration: number) {
+    function playNotesFunc(controller: midi.MidiController, notes: number[], duration: number) {
         if (duration > 0) {
             for (let note of notes) {
                 controller.noteOn(note)
@@ -144,5 +150,17 @@ namespace score {
             controller.noteOff(note);
         }
         basic.pause(6);
+    }
+
+    //% block="$controller notes $notes duration $duration=device_beat || in $foreground"
+    //% expandableArgumentMode="toggle"
+    //% inlineInputMode=inline
+    export function playNotes(controller: midi.MidiController, notes: number[], duration: number, foreground: Foreground = Foreground.Y) {
+        if (foreground == Foreground.Y)
+            playNotesFunc(controller, notes, duration)
+        else
+            control.inBackground(() => {
+                playNotesFunc(controller, notes, duration)
+            })
     }
 }

@@ -46,6 +46,8 @@ enum NoteOctave {
 }
 
 enum NoteNameOctave {
+    G2 = 43,
+    A2 = 45,
     A3 = 57,
     C4 = 60,
     //% block="C#4"
@@ -60,7 +62,7 @@ enum NoteNameOctave {
     //% block="C#5"
     Cs5,
     D5,
-    E5,
+    E5 = 76,
     F5,
     G5,
     A5,
@@ -113,7 +115,7 @@ namespace score {
         return ret
     }
 
-    //% block="name $name"
+    //% block="$name"
     export function note(name: NoteNameOctave): number {
         return convertNoteToKey(name)
     }

@@ -234,6 +234,7 @@ namespace score {
     //% group="Play"
     //% expandableArgumentMode="expand"
     //% inlineInputMode=inline
+    //% repeat.defl=1 repeat.min=1
     export function playChord(controller: midi.MidiController, notes: number[], duration: number, repeat: number = 1, foreground: Foreground = Foreground.Y) {
         if (foreground == Foreground.Y)
             for (let i = 0; i < repeat; i++)
@@ -250,6 +251,7 @@ namespace score {
     //% weight=100
     //% expandableArgumentMode="expand"
     //% inlineInputMode=inline
+    //% repeat.defl=1 repeat.min=1
     export function playNote(controller: midi.MidiController, note: number, duration: number, repeat: number = 1, foreground: Foreground = Foreground.Y) {
         playChord(controller, [note], duration, repeat, foreground)
     }

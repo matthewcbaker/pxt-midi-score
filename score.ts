@@ -199,7 +199,23 @@ namespace score {
         return convertNoteToKey(name)
     }
 
+    //% block="$name1 $name2 || $name3 | $name4 | $name5"
+    //% expandableArgumentMode="expand"
+    //% inlineInputMode=inline
+    export function chordCustom(name1: NoteNameOctave, name2: NoteNameOctave, name3?: NoteNameOctave, name4?: NoteNameOctave, name5?: NoteNameOctave): number[] {
+        let ret = [note(name1), note(name2)]
+        if (name3)
+            ret.push(note(name3))
+        if (name4)
+            ret.push(note(name4))
+        if (name5)
+            ret.push(note(name5))
+        return ret
+    }
+
     function playNotesFunc(controller: midi.MidiController, notes: number[], duration: number) {
+        if (!controller)
+            return
         if (duration > 0) {
             for (let note of notes) {
                 controller.noteOn(note)

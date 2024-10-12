@@ -230,7 +230,7 @@ namespace score {
         basic.pause(6);
     }
 
-    //% block="$controller chord $notes duration $duration=device_beat || repeat $times | in $foreground"
+    //% block="$controller chord $notes duration $duration=device_beat || repeat $repeat | in $foreground"
     //% group="Play"
     //% expandableArgumentMode="expand"
     //% inlineInputMode=inline
@@ -245,7 +245,7 @@ namespace score {
             })
     }
 
-    //% block="$controller note $note duration $duration=device_beat || repeat $times | in $foreground"
+    //% block="$controller note $note duration $duration=device_beat || repeat $repeat | in $foreground"
     //% group="Play"
     //% weight=100
     //% expandableArgumentMode="expand"

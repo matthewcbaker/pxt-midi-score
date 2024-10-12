@@ -129,14 +129,14 @@ enum NoteNameOctave {
 }
 
 enum Accidental {
-    //% block="##"
-    Sharp2 = 2,
+    //% block="-"
+    Natural = 0,
     //% block="#"
     Sharp1 = 1,
-    //% block=" "
-    Natural = 0,
     //% block="b"
     Flat1 = -1,
+    //% block="##"
+    Sharp2 = 2,
     //% block="bb"
     Flat2 = -2,
 }
@@ -154,6 +154,8 @@ enum Foreground {
 //% weight=84 icon="\uf039" color="#5ea9dd"
 //% groups="['Setup', 'Notes', 'Play']"
 namespace score {
+    let key = [0, 0, 0, 0, 0, 0, 0]
+
     //% block="score send midi to $location"
     //% group="Setup"
     //% weight=100
@@ -174,20 +176,19 @@ namespace score {
         midi.useRawSerial()
     }
 
-    //% block="score key"
+    //% block="score custom key c $c d $d e $e f $f g $g a $a b $b"
     //% group="Setup"
-    export function setKey() {
-
+    //% inlineInputMode=inline
+    export function setKeyCustom(c: Accidental, d: Accidental, e: Accidental, f: Accidental, g: Accidental, a: Accidental, b: Accidental) {
+        key = [c, d, e, f, g, a, b]
     }
 
     function convertNoteToKey(note: number): number {
-        if (note == 24 || note == 36 || note == 48 || note == 60 || note == 72) {
-            return note + 1
-        } else if (note == 29 || note == 41 || note == 53 || note == 65 || note == 77) {
-            return note + 1
-        } else {
-            return note
-        }
+        for (let k = 0; k < 7; k++)
+            for (let o = -1; o < 10; o++)
+                if (note == (o + 1) * 12 + k)
+                    return note + key[k]
+        return note
     }
 
     function convertNotesToKey(notes: number[]): number[] {

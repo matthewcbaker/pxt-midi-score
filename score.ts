@@ -9,20 +9,18 @@ enum Location {
 }
 
 enum NoteName {
-    C,
-    //% block="C#"
-    Cs,
-    D,
-    E,
-    F,
-    G,
-    A,
-    B
+    C = 0,
+    D = 2,
+    E = 4,
+    F = 5,
+    G = 7,
+    A = 9,
+    B = 11
 }
 
 enum NoteOctave {
     //% block="-1"
-    Om1,
+    Ominus1,
     //% block="0"
     O0,
     //% block="1"
@@ -46,27 +44,94 @@ enum NoteOctave {
 }
 
 enum NoteNameOctave {
-    G2 = 43,
-    A2 = 45,
-    A3 = 57,
-    C4 = 60,
-    //% block="C#4"
-    Cs4,
-    D4,
-    E4,
-    F4,
-    G4,
-    A4 = 69,
-    B4,
-    C5 = 72,
-    //% block="C#5"
-    Cs5,
-    D5,
-    E5 = 76,
-    F5,
-    G5,
-    A5,
-    B5
+    Cminus1 = NoteName.C + 12,
+    Dminus1 = NoteName.D + 12,
+    Eminus1 = NoteName.E + 12,
+    Fminus1 = NoteName.F + 12,
+    Gminus1 = NoteName.G + 12,
+    Aminus1 = NoteName.A + 12,
+    Bminus1 = NoteName.B + 12,
+    C0 = Cminus1 + 12,
+    D0 = Cminus1 + 12,
+    E0 = Cminus1 + 12,
+    F0 = Cminus1 + 12,
+    G0 = Cminus1 + 12,
+    A0 = Cminus1 + 12,
+    B0 = Cminus1 + 12,
+    C1 = C0 + 12,
+    D1 = D0 + 12,
+    E1 = E0 + 12,
+    F1 = F0 + 12,
+    G1 = G0 + 12,
+    A1 = A0 + 12,
+    B1 = B0 + 12,
+    C2 = C1 + 12,
+    D2 = D1 + 12,
+    E2 = E1 + 12,
+    F2 = F1 + 12,
+    G2 = G1 + 12,
+    A2 = A1 + 12,
+    B2 = B1 + 12,
+    C3 = C2 + 12,
+    D3 = D2 + 12,
+    E3 = E2 + 12,
+    F3 = F2 + 12,
+    G3 = G2 + 12,
+    A3 = A2 + 12,
+    B3 = B2 + 12,
+    C4 = C3 + 12,
+    D4 = D3 + 12,
+    E4 = E3 + 12,
+    F4 = F3 + 12,
+    G4 = G3 + 12,
+    A4 = A3 + 12,
+    B4 = B3 + 12,
+    C5 = C4 + 12,
+    D5 = D4 + 12,
+    E5 = E4 + 12,
+    F5 = F4 + 12,
+    G5 = G4 + 12,
+    A5 = A4 + 12,
+    B5 = B4 + 12,
+    C6 = C5 + 12,
+    D6 = D5 + 12,
+    E6 = E5 + 12,
+    F6 = F5 + 12,
+    G6 = G5 + 12,
+    A6 = A5 + 12,
+    B6 = B5 + 12,
+    C7 = C6 + 12,
+    D7 = D6 + 12,
+    E7 = E6 + 12,
+    F7 = F6 + 12,
+    G7 = G6 + 12,
+    A7 = A6 + 12,
+    B7 = B6 + 12,
+    C8 = C7 + 12,
+    D8 = D7 + 12,
+    E8 = E7 + 12,
+    F8 = F7 + 12,
+    G8 = G7 + 12,
+    A8 = A7 + 12,
+    B8 = B7 + 12,
+    C9 = C8 + 12,
+    D9 = D8 + 12,
+    E9 = E8 + 12,
+    F9 = F8 + 12,
+    G9 = G8 + 12
+}
+
+enum Accidental {
+    //% block="##"
+    Sharp2 = 2,
+    //% block="#"
+    Sharp1 = 1,
+    //% block=" "
+    Natural = 0,
+    //% block="b"
+    Flat1 = -1,
+    //% block="bb"
+    Flat2 = -2,
 }
 
 enum Foreground {
@@ -127,18 +192,6 @@ namespace score {
         return convertNoteToKey(name)
     }
 
-    //% block="name2 $name $octave"
-    //% octave.min=-1 octave.max=9 octave.defl=4
-    export function note2(name: NoteName, octave: number): number {
-        return 60
-    }
-
-    //% block="name3 $name $octave"
-    //% octave.defl=O4
-    export function note3(name: NoteName, octave: NoteOctave): number {
-        return 60
-    }
-
     function playNotesFunc(controller: midi.MidiController, notes: number[], duration: number) {
         if (duration > 0) {
             for (let note of notes) {
@@ -152,15 +205,22 @@ namespace score {
         basic.pause(6);
     }
 
-    //% block="$controller notes $notes duration $duration=device_beat || in $foreground"
+    //% block="$controller chord $notes duration $duration=device_beat || in $foreground"
     //% expandableArgumentMode="toggle"
     //% inlineInputMode=inline
-    export function playNotes(controller: midi.MidiController, notes: number[], duration: number, foreground: Foreground = Foreground.Y) {
+    export function playChord(controller: midi.MidiController, notes: number[], duration: number, foreground: Foreground = Foreground.Y) {
         if (foreground == Foreground.Y)
             playNotesFunc(controller, notes, duration)
         else
             control.inBackground(() => {
                 playNotesFunc(controller, notes, duration)
             })
+    }
+
+    //% block="$controller note $note duration $duration=device_beat || in $foreground"
+    //% expandableArgumentMode="toggle"
+    //% inlineInputMode=inline
+    export function playNote(controller: midi.MidiController, note: number, duration: number, foreground: Foreground = Foreground.Y) {
+        playChord(controller, [note], duration, foreground)
     }
 }

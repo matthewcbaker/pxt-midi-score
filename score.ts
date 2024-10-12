@@ -193,7 +193,8 @@ namespace score {
     function convertNotesToKey(notes: number[]): number[] {
         let ret: number[] = []
         for (let note of notes) {
-            ret.push(convertNoteToKey(note))
+            if (note)
+                ret.push(convertNoteToKey(note))
         }
         return ret
     }
@@ -210,14 +211,7 @@ namespace score {
     //% expandableArgumentMode="expand"
     //% inlineInputMode=inline
     export function chordCustom(name1: NoteNameOctave, name2: NoteNameOctave, name3?: NoteNameOctave, name4?: NoteNameOctave, name5?: NoteNameOctave): number[] {
-        let ret = [note(name1), note(name2)]
-        if (name3)
-            ret.push(note(name3))
-        if (name4)
-            ret.push(note(name4))
-        if (name5)
-            ret.push(note(name5))
-        return ret
+        return convertNotesToKey([name1, name2, name3, name4, name5])
     }
 
     function playNotesFunc(controller: midi.MidiController, notes: number[], duration: number) {

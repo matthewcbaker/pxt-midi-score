@@ -152,8 +152,11 @@ enum Foreground {
  * Musical Score
  */
 //% weight=84 icon="\uf039" color="#5ea9dd"
+//% groups="['Setup', 'Notes', 'Play']"
 namespace score {
     //% block="score send midi to $location"
+    //% group="Setup"
+    //% weight=100
     export function use(location: Location) {
         if (location == Location.USB_TEXT) {
             midi.useSerial()
@@ -172,6 +175,7 @@ namespace score {
     }
 
     //% block="score key"
+    //% group="Setup"
     export function setKey() {
 
     }
@@ -195,11 +199,14 @@ namespace score {
     }
 
     //% block="$name"
+    //% group="Notes"
+    //% weight=100
     export function note(name: NoteNameOctave): number {
         return convertNoteToKey(name)
     }
 
     //% block="$name1 $name2 || $name3 | $name4 | $name5"
+    //% group="Notes"
     //% expandableArgumentMode="expand"
     //% inlineInputMode=inline
     export function chordCustom(name1: NoteNameOctave, name2: NoteNameOctave, name3?: NoteNameOctave, name4?: NoteNameOctave, name5?: NoteNameOctave): number[] {
@@ -229,6 +236,7 @@ namespace score {
     }
 
     //% block="$controller chord $notes duration $duration=device_beat || in $foreground"
+    //% group="Play"
     //% expandableArgumentMode="toggle"
     //% inlineInputMode=inline
     export function playChord(controller: midi.MidiController, notes: number[], duration: number, foreground: Foreground = Foreground.Y) {
@@ -241,6 +249,8 @@ namespace score {
     }
 
     //% block="$controller note $note duration $duration=device_beat || in $foreground"
+    //% group="Play"
+    //% weight=100
     //% expandableArgumentMode="toggle"
     //% inlineInputMode=inline
     export function playNote(controller: midi.MidiController, note: number, duration: number, foreground: Foreground = Foreground.Y) {

@@ -44,12 +44,19 @@ enum NoteOctave {
 }
 
 enum NoteNameOctave {
+    //% block="C-1"
     Cminus1 = NoteName.C + 12,
+    //% block="D-1"
     Dminus1 = NoteName.D + 12,
+    //% block="E-1"
     Eminus1 = NoteName.E + 12,
+    //% block="F-1"
     Fminus1 = NoteName.F + 12,
+    //% block="G-1"
     Gminus1 = NoteName.G + 12,
+    //% block="A-1"
     Aminus1 = NoteName.A + 12,
+    //% block="B-1"
     Bminus1 = NoteName.B + 12,
     C0 = Cminus1 + 12,
     D0 = Cminus1 + 12,

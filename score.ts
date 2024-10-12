@@ -154,6 +154,7 @@ enum Foreground {
 //% weight=84 icon="\uf039" color="#5ea9dd"
 //% groups="['Setup', 'Notes', 'Play']"
 namespace score {
+    let key_notes = [0, 2, 4, 5, 7, 9, 11]
     let key = [0, 0, 0, 0, 0, 0, 0]
 
     //% block="score send midi to $location"
@@ -186,7 +187,7 @@ namespace score {
     function convertNoteToKey(note: number): number {
         for (let k = 0; k < 7; k++)
             for (let o = -1; o < 10; o++)
-                if (note == (o + 1) * 12 + k)
+                if (note == (o + 1) * 12 + key_notes[k])
                     return note + key[k]
         return note
     }

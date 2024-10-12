@@ -230,25 +230,27 @@ namespace score {
         basic.pause(6);
     }
 
-    //% block="$controller chord $notes duration $duration=device_beat || in $foreground"
+    //% block="$controller chord $notes duration $duration=device_beat || repeat $times | in $foreground"
     //% group="Play"
-    //% expandableArgumentMode="toggle"
+    //% expandableArgumentMode="expand"
     //% inlineInputMode=inline
-    export function playChord(controller: midi.MidiController, notes: number[], duration: number, foreground: Foreground = Foreground.Y) {
+    export function playChord(controller: midi.MidiController, notes: number[], duration: number, repeat: number, foreground: Foreground = Foreground.Y) {
         if (foreground == Foreground.Y)
-            playNotesFunc(controller, notes, duration)
+            for (let i = 0; i < repeat; i++)
+                playNotesFunc(controller, notes, duration)
         else
             control.inBackground(() => {
-                playNotesFunc(controller, notes, duration)
+                for (let i = 0; i < repeat; i++)
+                    playNotesFunc(controller, notes, duration)
             })
     }
 
-    //% block="$controller note $note duration $duration=device_beat || in $foreground"
+    //% block="$controller note $note duration $duration=device_beat || repeat $times | in $foreground"
     //% group="Play"
     //% weight=100
-    //% expandableArgumentMode="toggle"
+    //% expandableArgumentMode="expand"
     //% inlineInputMode=inline
-    export function playNote(controller: midi.MidiController, note: number, duration: number, foreground: Foreground = Foreground.Y) {
-        playChord(controller, [note], duration, foreground)
+    export function playNote(controller: midi.MidiController, note: number, duration: number, repeat: number, foreground: Foreground = Foreground.Y) {
+        playChord(controller, [note], duration, repeat, foreground)
     }
 }
